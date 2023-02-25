@@ -1,0 +1,91 @@
+﻿@model IEnumerable<DomaciM3T2.Models.Karta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Karte</h1>
+<div style="display: flex; justify-content: space-around;">
+    <div>
+        <h3>Sortiranje podataka</h3>
+        @using (Html.BeginForm("Index", "Kartas", FormMethod.Get))
+        {
+            @Html.DropDownList("sortiranje", ViewBag.NaciniSortiranja as SelectList, new { @class = "form-control" })
+            <input type="submit" class="btn btn-primary form-control" value="Sortiraj" />
+        }
+    </div>
+    <div>
+        <h3>Filtriranje podataka</h3>
+        @using (Html.BeginForm("Index", "Kartas", FormMethod.Get))
+        {
+            @Html.Label("Datum od")
+            @Html.TextBox("DatumOd", null, new { type = "Date", @class = "form-control" })
+            @Html.Label("Datum do")
+            @Html.TextBox("DatumDo", null, new { type = "Date", @class = "form-control" })
+            @Html.Label("Cena od")
+            @Html.TextBox("CenaOd", null, new { type = "Number", step = 0.1, @class = "form-control" })
+            @Html.Label("Cena do")
+            @Html.TextBox("CenaDo", null, new { type = "Number", step = 0.1, @class = "form-control" })
+
+            @Html.Hidden("sortiranje")
+            <input type="submit" value="Filtriraj" class="btn btn-primary" />
+        }
+    </div>
+</div>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumKupovine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kupac)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preuzeta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipKarte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Festival)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumKupovine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kupac)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preuzeta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipKarte.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Festival.Naziv)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
